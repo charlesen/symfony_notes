@@ -1,14 +1,24 @@
 {% extends 'note/layout.html.twig' %}
 
-{% block title %}Liste des notes {% endblock %}
+{% block title %}Dernières notes {% endblock %}
 
 {% block content %}
-  <h1>Dernières Notes</h1>
-  <ul>
-  {% for note in notes %}
-        <li>
-          <a href="{{ path('note_show', {'id': note.id}) }}">#{{ note.id }} {{ note.title }}</a>
-        </li>
-    {% endfor %}
-  </ul>
+  <div class="container">
+    <div class="row">
+      {% for note in notes %}
+              <div class="col-4">
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <h5 class="card-title">#{{ note.id }} {{ note.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Par Charly</h6>
+                    <a href="{{ path('note_show', {'id': note.id}) }}">
+                      <p class="card-text">{{ note.content }}</p>
+                    </a>
+                    <a href="{{ path('note_show', {'id': note.id}) }}" class="card-link">Afficher</a>
+                  </div>
+                </div>
+              </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}
