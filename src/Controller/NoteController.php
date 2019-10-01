@@ -20,8 +20,10 @@ class NoteController extends AbstractController
        */
     public function index()
     {
+        $notes = $this->getDoctrine()->getRepository(Note::class)->findAll();
         return $this->render('note/index.html.twig', [
             'number' => random_int(0, 100),
+            'notes'=>$notes
         ]);
     }
 

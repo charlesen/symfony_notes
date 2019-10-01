@@ -3,6 +3,12 @@
 {% block title %}Liste des notes {% endblock %}
 
 {% block content %}
-  <h1>Note</h1>
-  <p>Affichage de  la note aléatoire {{ number }}</p
+  <h1>Dernières Notes</h1>
+  <ul>
+  {% for note in notes %}
+        <li>
+          <a href="{{ path('note_show', {'id': note.id}) }}">#{{ note.id }} {{ note.title }}</a>
+        </li>
+    {% endfor %}
+  </ul>
 {% endblock %}

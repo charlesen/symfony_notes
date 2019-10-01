@@ -1,2 +1,9 @@
+{% extends 'note/layout.html.twig' %}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block content %}
 <h1>Note {{title}} (#{{id}})</h1>
 <p>{{content}} - {{ number }}</p
+
+{% endblock %}
