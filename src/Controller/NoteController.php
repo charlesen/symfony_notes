@@ -20,10 +20,13 @@ class NoteController extends AbstractController
        */
     public function index()
     {
+        // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
         $notes = $this->getDoctrine()->getRepository(Note::class)->findAll();
         return $this->render('note/index.html.twig', [
             'number' => random_int(0, 100),
-            'notes'=>$notes
+            'notes'=>$notes,
+            'user' => $user
         ]);
     }
 
@@ -32,6 +35,7 @@ class NoteController extends AbstractController
      */
     public function show(int $id)
     {
+        // $this->denyAccessUnlessGranted('view', $post);
         $note = $this->getDoctrine()->getRepository(Note::class)->find($id);
         if (!$note) {
             throw $this->createNotFoundException("Aucun item trouvé avec l'id ".$id);
@@ -49,6 +53,8 @@ class NoteController extends AbstractController
     //  */
     // public function edit(int $id)
     // {
+    // $this->denyAccessUnlessGranted('edit', $post);
+    // $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
     //     return $this->render('note/edit.html.twig', [
     //       'id' => $id,
     //       'number' => random_int(0, 100),
