@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>Nouveau compte</h1>
-    {{ form_start(registrationForm) }}
+    {{ form_start(registrationForm, {'class': 'form_inline'}) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.password) }}
         {{ form_row(registrationForm.agreeTerms) }}

@@ -16,9 +16,14 @@
         <nav class="my-2 my-md-0 mr-md-3">
           <a class="p-2 text-dark" href="{{ path('note_index') }}">Liste</a>
           <a class="p-2 text-dark" href="{{ path('note_index') }}">Tendances</a>
+          {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <!-- <p>Username: {{ app.user.username }}</p> -->
+            <a class="btn btn-outline-primary" href="#">Nouvelle note</a>
+          {% else %}
+            <a class="btn btn-primary btn-sm" href="{{ path('app_register') }}">S'inscrire</a>
+            <a class="btn btn-outline-primary btn-sm" href="{{ path('app_login') }}">Connexion</a>
+          {% endif %}
         </nav>
-        <a class="btn btn-outline-primary" href="#">Nouvelle note</a>
-        <!-- <a class="btn btn-outline-primary" href="#">Se connecter</a> -->
       </div><!-- Entete de menu -->
       <div class="container">
         {% block body %}{% endblock %}

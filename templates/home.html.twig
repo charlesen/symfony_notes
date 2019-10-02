@@ -4,11 +4,21 @@
 
 {% block content %}
   <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Bloc-notes perso</h1>
-    <p class="lead">
-      Grâce à ce génialissime bloc-note en ligne,
-      <br /> je peux sauvegarder le contenu de mes pensées tout au long de la journée.
-      <br /> <strong>Je sais, c'est génial !😀</strong>
-    </p>
+    <h1 class="display-4">Mon Bloc-notes</h1>
+    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+      <div class="lead">
+        <p>
+          Sauvegarder le contenu de ses pensées tout au long de la journée. En toute simplicité.
+          <br /> <strong>Je sais, c'est génial ! 😀</strong>
+        </p>
+
+        <h3 class="mb-4">Rejoignez <strong>Les notes de charly</strong> dès aujourd'hui.</h3>
+        <a class="btn btn-primary btn-lg" href="{{ path('app_register') }}">S'inscrire</a>
+        <a class="btn btn-outline-primary btn-lg" href="{{ path('app_login') }}">Connexion</a>
+
+      </div>
+    {% else %}
+      <p>Bienvenue {{ app.user.getFirstname() }}</p>
+    {% endif %}
   </div>
 {% endblock %}
