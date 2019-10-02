@@ -3,12 +3,10 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface
 {
@@ -36,19 +34,9 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    private $firstname;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $familyname;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $bio;
+    private $isActive;
 
     public function getId(): ?int
     {
@@ -128,41 +116,17 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        // $this->password = null;
     }
 
-    public function getFirstname(): ?string
+    public function getIsActive(): ?bool
     {
-        return $this->firstname;
+        return $this->isActive;
     }
 
-    public function setFirstname(?string $firstname): self
+    public function setIsActive(bool $isActive): self
     {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    public function getFamilyname(): ?string
-    {
-        return $this->familyname;
-    }
-
-    public function setFamilyname(?string $familyname): self
-    {
-        $this->familyname = $familyname;
-
-        return $this;
-    }
-
-    public function getBio(): ?string
-    {
-        return $this->bio;
-    }
-
-    public function setBio(?string $bio): self
-    {
-        $this->bio = $bio;
+        $this->isActive = $isActive;
 
         return $this;
     }
