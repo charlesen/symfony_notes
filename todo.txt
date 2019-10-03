@@ -1,2 +1,3 @@
 # Maj sql
 $ php bin/console doctrine:schema:update --force
+php bin/console doctrine:migrations:execute --up 20191003093103

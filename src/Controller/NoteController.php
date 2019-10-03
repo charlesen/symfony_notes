@@ -1,87 +1,94 @@
 <?php
-// src/Controller/NoteController.php
+
 namespace App\Controller;
 
 use App\Entity\Note;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Form\NoteType;
+use App\Repository\NoteRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-//  php bin/console make:migration
-//  php bin/console doctrine:migrations:migrate
-//  php bin/console doctrine:query:sql 'SELECT * FROM note'
-
+/**
+ * @Route("/note")
+ */
 class NoteController extends AbstractController
 {
     /**
-       * Note list
-       ** @Route("/note", name="note_index")
-       */
-    public function index()
+     * @Route("/", name="note_index", methods={"GET"})
+     */
+    public function index(NoteRepository $noteRepository): Response
     {
-        // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $user = $this->getUser();
-        $notes = $this->getDoctrine()->getRepository(Note::class)->findAll();
         return $this->render('note/index.html.twig', [
-            'number' => random_int(0, 100),
-            'notes'=>$notes,
-            'user' => $user
+            'notes' => $noteRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/note/{id}", name="note_show")
+     * @Route("/new", name="note_new", methods={"GET","POST"})
      */
-    public function show(int $id)
+    public function new(Request $request): Response
     {
-        // $this->denyAccessUnlessGranted('view', $post);
-        $note = $this->getDoctrine()->getRepository(Note::class)->find($id);
-        if (!$note) {
-            throw $this->createNotFoundException("Aucun item trouvé avec l'id ".$id);
+        $note = new Note();
+        $form = $this->createForm(NoteType::class, $note);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($note);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('note_index');
         }
-        return $this->render('note/show.html.twig', [
-          'id' => $id,
-          'title' => $note->getTitle(),
-          'content' => $note->getContent(),
-          'number' => random_int(0, 100),
-      ]);
+
+        return $this->render('note/new.html.twig', [
+            'note' => $note,
+            'form' => $form->createView(),
+        ]);
     }
 
-    // /**
-    //  * @Route("/note/{id}", name="note_show")
-    //  */
-    // public function edit(int $id)
-    // {
-    // $this->denyAccessUnlessGranted('edit', $post);
-    // $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
-    //     return $this->render('note/edit.html.twig', [
-    //       'id' => $id,
-    //       'number' => random_int(0, 100),
-    //   ]);
-    // }
-
+    /**
+     * @Route("/{id}", name="note_show", methods={"GET"})
+     */
+    public function show(Note $note): Response
+    {
+        return $this->render('note/show.html.twig', [
+            'note' => $note,
+        ]);
+    }
 
     /**
-     * @Route("/create", name="note_create")
+     * @Route("/{id}/edit", name="note_edit", methods={"GET","POST"})
      */
-    public function create(): Response
+    public function edit(Request $request, Note $note): Response
     {
-        // you can fetch the EntityManager via $this->getDoctrine()
-        // or you can add an argument to the action: createProduct(EntityManagerInterface $entityManager)
-        $entityManager = $this->getDoctrine()->getManager();
-        $note = new Note();
+        $form = $this->createForm(NoteType::class, $note);
+        $form->handleRequest($request);
 
-        $number = random_int(0, 100);
-        $note->setTitle('Une note '.$number);
-        $note->setContent('Je suis une note'.$number);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
 
-        // tell Doctrine you want to (eventually) save the Item (no queries yet)
-        $entityManager->persist($note);
+            return $this->redirectToRoute('note_index');
+        }
 
-        // actually executes the queries (i.e. the INSERT query)
-        $entityManager->flush();
+        return $this->render('note/edit.html.twig', [
+            'note' => $note,
+            'form' => $form->createView(),
+        ]);
+    }
 
-        return new Response(" Nouvelle note créée n°".$note->getId());
+    /**
+     * @Route("/{id}", name="note_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Note $note): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$note->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($note);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('note_index');
     }
 }

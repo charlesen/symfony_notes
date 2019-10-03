@@ -12,9 +12,15 @@ body {
 }
 .site_title a,
 .card-text a {
-  text-decoration: none;
   color: #333;
 }
+
+.site_title a,
+.card-text a,
+a.dropdown-toggle:hover {
+  text-decoration: none;
+}
+
 
 /* =================================
 * Formulaire de connexion

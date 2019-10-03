@@ -1,26 +1,37 @@
-{% extends 'note/layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Dernières notes {% endblock %}
+{% block title %}Note index{% endblock %}
 
-{% block content %}
-  <div class="container">
-    <div class="row">
-      {% for note in notes %}
-              <div class="col-4">
-                <div class="card mb-4">
-                  <div class="card-body">
-                    <h5 class="card-title">#{{ note.id }} {{ note.title }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Par Charly</h6>
-                      <p class="card-text">
-                        <a href="{{ path('note_show', {'id': note.id}) }}">
-                        {{ note.content }}
-                        </a>
-                      </p>
-                    <a href="{{ path('note_show', {'id': note.id}) }}" class="card-link">Afficher</a>
-                  </div>
-                </div>
-              </div>
-      {% endfor %}
-    </div>
-  </div>
+{% block body %}
+    <h1>Note index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for note in notes %}
+            <tr>
+                <td>{{ note.id }}</td>
+                <td>{{ note.title }}</td>
+                <td>{{ note.content }}</td>
+                <td>
+                    <a href="{{ path('note_show', {'id': note.id}) }}">show</a>
+                    <a href="{{ path('note_edit', {'id': note.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('note_new') }}">Create new</a>
 {% endblock %}

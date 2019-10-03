@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
         <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
         <link rel="stylesheet" href="static/css/app.css">
     </head>
@@ -17,8 +18,13 @@
           <a class="p-2 text-dark" href="{{ path('note_index') }}">Liste</a>
           <a class="p-2 text-dark" href="{{ path('note_index') }}">Tendances</a>
           {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <!-- <p>Username: {{ app.user.username }}</p> -->
             <a class="btn btn-outline-primary" href="#">Nouvelle note</a>
+            <a class="p-2 text-dark dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-user"></i>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{{ path('profile') }}">Profil</a>
+            </div>
           {% else %}
             <a class="btn btn-primary btn-sm" href="{{ path('app_register') }}">S'inscrire</a>
             <a class="btn btn-outline-primary btn-sm" href="{{ path('app_login') }}">Connexion</a>

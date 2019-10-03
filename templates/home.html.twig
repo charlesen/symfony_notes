@@ -1,8 +1,8 @@
-{% extends 'note/layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Liste des notes {% endblock %}
 
-{% block content %}
+{% block body %}
   <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Mon Bloc-notes</h1>
     {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
