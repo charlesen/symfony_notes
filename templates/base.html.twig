@@ -18,12 +18,13 @@
           <a class="p-2 text-dark" href="{{ path('note_index') }}">Liste</a>
           <a class="p-2 text-dark" href="{{ path('note_index') }}">Tendances</a>
           {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <a class="btn btn-outline-primary" href="#">Nouvelle note</a>
+            <a class="btn btn-outline-primary" href="{{ path('note_new') }}">Nouvelle note</a>
             <a class="p-2 text-dark dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-user"></i>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="{{ path('profile') }}">Profil</a>
+              <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
             </div>
           {% else %}
             <a class="btn btn-primary btn-sm" href="{{ path('app_register') }}">S'inscrire</a>
