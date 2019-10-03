@@ -22,9 +22,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('note_index') }}">back to list</a>
+    <a href="{{ path('note_index') }}">Retour</a>
 
-    <a href="{{ path('note_edit', {'id': note.id}) }}">edit</a>
+    <a href="{{ path('note_edit', {'id': note.id}) }}">Editer</a>
 
     {{ include('note/_delete_form.html.twig') }}
 {% endblock %}

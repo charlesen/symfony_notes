@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Note{% endblock %}
+{% block title %}Editer la Note{% endblock %}
 
 {% block body %}
     <h1>Edit Note</h1>
 
-    {{ include('note/_form.html.twig', {'button_label': 'MAJ'}) }}
+    {{ include('note/_form.html.twig', {'button_label': 'Valider'}) }}
 
-    <a href="{{ path('note_index') }}">Retour</a>
+    <a href="{{ path('note_index') }}">Annuler</a>
 
     {{ include('note/_delete_form.html.twig') }}
 {% endblock %}
