@@ -14,7 +14,7 @@ class NoteType extends AbstractType
         $builder
             ->add('title')
             ->add('content')
-            ->add('author')
+            // ->add('author')
         ;
     }
 

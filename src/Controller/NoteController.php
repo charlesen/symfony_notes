@@ -35,6 +35,7 @@ class NoteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $note->setAuthor($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($note);
             $entityManager->flush();
@@ -63,6 +64,8 @@ class NoteController extends AbstractController
      */
     public function edit(Request $request, Note $note): Response
     {
+        // $user = $this->getUser();
+        // $note->setAuthor($user);
         $form = $this->createForm(NoteType::class, $note);
         $form->handleRequest($request);
 
